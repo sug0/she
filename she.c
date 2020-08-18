@@ -326,9 +326,9 @@ main(int argc, char **argv) {
 	he.d = open(argv[1], O_RDWR);
 	if (he.d < 0) {
 		he.d = open(argv[1], O_RDONLY);
-        if (he.d < 0)
+		if (he.d < 0)
 			goto error;
-        modifiable = 0;
+	modifiable = 0;
     }
 
 	he.siz = lseek(he.d, 0, SEEK_END);
