@@ -315,7 +315,7 @@ runcmd(char *cmd) {
 int
 main(int argc, char **argv) {
 	struct tb_event ev;
-	int i, change;
+	int i, change, modifiable = 1;
 	char needle[256];
 
 	setlocale(LC_ALL, "");
@@ -324,8 +324,12 @@ main(int argc, char **argv) {
 
 	/* check args */
 	he.d = open(argv[1], O_RDWR);
-	if (he.d < 0)
-		goto error;
+	if (he.d < 0) {
+		he.d = open(argv[1], O_RDONLY);
+        if (he.d < 0)
+			goto error;
+        modifiable = 0;
+    }
 
 	he.siz = lseek(he.d, 0, SEEK_END);
 	if (he.siz < 0)
@@ -510,7 +514,7 @@ main(int argc, char **argv) {
 					scroll(TB_KEY_END);
 					break;
 				case 'i':
-					he.insert = 1;
+					he.insert = 1 & modifiable;
 					break;
 				case 'n':
 					base = search(he.map + he.csr + 1,
