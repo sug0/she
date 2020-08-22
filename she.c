@@ -514,7 +514,7 @@ main(int argc, char **argv) {
 					scroll(TB_KEY_END);
 					break;
 				case 'i':
-					he.insert = 1 & modifiable;
+					he.insert = modifiable;
 					break;
 				case 'n':
 					base = search(he.map + he.csr + 1,
